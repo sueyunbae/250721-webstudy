@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.PosterMapper">
+
+  <!-- 목록 -->
+  <select id="postListData" resultType="com.sist.vo.PostVO" parameterType="int">
+    SELECT postId, postTitle, poster,
+           TO_CHAR(postDate, 'YYYY-MM-DD') AS dbday, postView
+    FROM en_post
+    ORDER BY postId DESC
+    OFFSET #{start} ROWS FETCH NEXT 10 ROWS ONLY
+  </select>
+
+  <!-- 총 페이지 수 -->
+  <select id="postTotalPage" resultType="int">
+    SELECT CEIL(COUNT(*)/10.0) 
+    FROM en_post
+  </select>
+
+  <!-- 게시물 추가 -->
+  <insert id="postInsert" parameterType="com.sist.vo.PostVO">
+    INSERT INTO en_post(postId, poster, postTitle, postContent, pwd)
+    VALUES(post_id_seq.nextval, #{poster}, #{postTitle}, #{postContent}, #{pwd})
+  </insert>
+
+  <!-- 조회수 증가 -->
+  <update id="postHitIncrement" parameterType="int">
+    UPDATE en_post SET postView = postView + 1 
+    WHERE postId = #{postId}
+  </update>
+
+  <!-- 게시물 상세보기 -->
+  <select id="postDetailData" resultType="com.sist.vo.PostVO" parameterType="int">
+    SELECT postId, poster, postTitle, postContent, postView,
+           TO_CHAR(postDate, 'YYYY-MM-DD HH24:MI:SS') AS dbday
+    FROM en_post
+    WHERE postId = #{postId}
+  </select>
+
+  <!-- 비밀번호 확인 -->
+  <select id="postGetPassword" resultType="string" parameterType="int">
+    SELECT pwd 
+    FROM en_post 
+    WHERE postId = #{postId}
+  </select>
+
+  <!-- 게시물 삭제 -->
+  <delete id="postDelete" parameterType="int">
+    DELETE FROM en_post
+    WHERE postId = #{postId}
+  </delete>
+
+  <!-- 게시물 수정 -->
+  <update id="postUpdate" parameterType="com.sist.vo.PostVO">
+    UPDATE en_post SET poster = #{poster}, postTitle = #{postTitle}, postContent = #{postContent}
+    WHERE postId = #{postId}
+  </update>
+
+</mapper>
