@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.post-mapper">
+   <select id="postListData" resultType="com.sist.vo.PostVO"
+     parameterType="int"
+   >
+     SELECT postId,postTitle,poster,
+            TO_CHAR(postdate,'YYYY-MM-DD') as dbday,postView
+     FROM en_post
+     ORDER BY postId DESC
+     OFFSET #{start} ROWS FETCH NEXT 10 ROWS ONLY
+   </select>
+   <select id="postTotalPage" resultType="int">
+     SELECT COUNT(*)
+     FROM en_post
+   </select>
+   
+   <!-- 추가 -->
+   <insert id="postInsert" parameterType="com.sist.vo.PostVO">
+     INSERT INTO en_post(postId, poster, postTitle, postContent, postImage, postView, postDate)
+     VALUES(
+	    post_id_seq.NEXTVAL,
+	    #{poster},
+	    #{postTitle},
+	    #{postContent},
+	    #{postImage},
+	    0,
+	    SYSDATE
+	)
+   </insert>
+   <!-- 조회수 증가 -->
+   <update id="postHitIncrement" parameterType="com.sist.vo.PostVO">
+    UPDATE en_post SET
+    postView=postView+1 
+    WHERE postId=#{postId}
+   </update>
+   <!-- 상세보기 -->
+   <select id="postDetailData" resultType="com.sist.vo.PostVO"
+    parameterType="int"
+   >
+     SELECT postId,poster,postTitle,postContent,postView,
+            TO_CHAR(postDate,'YYYY-MM-DD HH24:MI:SS') as dbday
+     FROM en_post
+     WHERE postId=#{postId}
+   </select>
+</mapper>
+

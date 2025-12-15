@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>공지사항</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      color: #333;
+      background-color: #ffffff; /* 바탕 흰색 */
+      margin: 0;
+      padding: 40px 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    h2 {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 20px;
+      text-align: right;
+    }
+
+    .breadcrumb a {
+      color: #999;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background-color: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
+    }
+
+    thead tr {
+      background-color: #f5f5f5;
+      text-align: center;
+    }
+
+    thead th {
+      padding: 12px 10px;
+      font-weight: 600;
+      color: #555;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tbody td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #eee;
+      vertical-align: middle;
+      color: #555;
+    }
+
+    tbody tr:hover {
+      background-color: #fafafa;
+    }
+
+    tbody td.no {
+      width: 5%;
+      text-align: center;
+      color: #aaa;
+    }
+
+    tbody td.title {
+      width: 45%;
+      font-weight: 500;
+    }
+
+    tbody td.title a {
+      text-decoration: none;
+      color: #333;
+      transition: 0.2s;
+    }
+
+    tbody td.title a:hover {
+      color: #666;
+      text-decoration: underline;
+    }
+
+    tbody td.type {
+      width: 15%;
+      text-align: center;
+      color: #777;
+    }
+
+    tbody td.author,
+    tbody td.date,
+    tbody td.views {
+      width: 10%;
+      text-align: center;
+      color: #777;
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead tr {
+        display: none;
+      }
+      tbody td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+      tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: calc(50% - 20px);
+        font-weight: 600;
+        text-align: left;
+        color: #555;
+      }
+    }
+    .pagination {
+      text-align: center;
+      margin: 20px 0;
+      clear: both;
+    }
+    
+    .pagination button {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      color: #333;
+      padding: 6px 12px;
+      margin: 0 3px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+    
+    .pagination button:hover:not(.active) {
+      background-color: #f0f0f0;
+    }
+    
+    .pagination button.active {
+      background-color: #333;
+      color: #fff;
+      border-color: #333;
+      cursor: default;
+    }
+    
+    .pagination button:disabled {
+      background-color: #eee;
+      color: #aaa;
+      border-color: #ddd;
+      cursor: default;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>공지사항</h2>
+    <div class="breadcrumb">
+      홈 &gt; 공지사항
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>종류</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>등록일</th>
+          <th>조회수</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="no" data-label="No">1</td>
+          <td class="type" data-label="종류">이벤트</td>
+          <td class="title" data-label="제목"><a href="#">펜션 오픈 기념 할인 이벤트</a></td>
+          <td class="author" data-label="작성자">최고관리자</td>
+          <td class="date" data-label="등록일">2018-11-08</td>
+          <td class="views" data-label="조회수">134</td>
+        </tr>
+        <tr>
+          <td class="no" data-label="No">2</td>
+          <td class="type" data-label="종류">공지</td>
+          <td class="title" data-label="제목"><a href="#">펜션 오픈 기념 할인 이벤트</a></td>
+          <td class="author" data-label="작성자">최고관리자</td>
+          <td class="date" data-label="등록일">2018-11-08</td>
+          <td class="views" data-label="조회수">134</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+      <button class="prev" disabled>이전</button>
+      <button class="page active">1</button>
+      <button class="page">2</button>
+      <button class="page">3</button>
+      <button class="page">4</button>
+      <button class="page">5</button>
+      <button class="next">다음</button>
+    </div>
+  </div>
+</body>
+</html>
